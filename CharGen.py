@@ -1,0 +1,1 @@
+#return an array based upon Char? Copy over FB based upon char? ... ?
