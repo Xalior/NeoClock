@@ -1,37 +1,30 @@
 from flask import Flask
-from apscheduler.schedulers.background import BackgroundScheduler
-from apscheduler.triggers.interval import IntervalTrigger
 import time
-import atexit
-from Pixel import Pixel
+import thread
+
+x = 1
+
+def LED_loop():
+    global x
+
+    while True:
+        LED_refresh(x)
 
 app = Flask(__name__)
 
-framebuffer = [[Pixel(64, 128, 196, 255) for y in range(8)] for x in range(32)]
-
-print framebuffer[0][0].__str__()
-
 @app.route('/')
 def hello_world():
-    return framebuffer.__str__()
+    global x
+
+    x = x * 2
+    return x.__str__()
 
 
-def LED_refresh():
+def LED_refresh(dt):
     print time.strftime("%A, %d. %B %Y %I:%M:%S %p")
+    time.sleep(0.1)
 
-
-scheduler = BackgroundScheduler()
-scheduler.start()
-scheduler.add_job(
-    func=LED_refresh,
-    trigger=IntervalTrigger(seconds=1./20),
-    id='LED_refresh',
-    name='Update the internal framebuffer to the LEDs',
-    replace_existing=True)
-# Shut down the scheduler when exiting the app
-atexit.register(lambda: scheduler.shutdown())
-
+thread.start_new_thread(LED_loop, ());
 
 if __name__ == '__main__':
-    app.run()
-
+    app.run(host='0.0.0.0')
