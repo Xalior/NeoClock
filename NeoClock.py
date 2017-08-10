@@ -24,7 +24,7 @@ def LED_refresh(dt):
     print time.strftime("%A, %d. %B %Y %I:%M:%S %p")
     time.sleep(0.1)
 
-thread.start_new_thread(LED_loop, ());
+thread_id = thread.start_new_thread(LED_loop, ());
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
