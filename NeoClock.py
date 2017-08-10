@@ -59,7 +59,16 @@ def hello_world():
     x = x * 2
     return x.__str__()
 
+<<<<<<< HEAD
 thread.start_new_thread(main, ());
+=======
+
+def LED_refresh(dt):
+    print time.strftime("%A, %d. %B %Y %I:%M:%S %p")
+    time.sleep(0.1)
+
+thread_id = thread.start_new_thread(LED_loop, ());
+>>>>>>> 15f5237e2b91cafaab1afd58ab12a56cc1b25d1f
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
